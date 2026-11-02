@@ -1,1 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de productos · Oleum</title>
+  <meta name="description" content="Área de administración de Oleum: alta, edición, existencias y baja de productos.">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
 
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <a class="logo" href="index.html">Oleum</a>
+
+    <nav class="menu" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#catalogo">Catálogo</a></li>
+        <li><a href="cart.html">Carrito (<span id="contador-carrito">0</span>)</a></li>
+        <li><a href="perfil.html">Mi cuenta</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="register.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <h1>Administración</h1>
+
+    <!-- ===== SIN PERMISOS ===== -->
+    <section id="sin-acceso" class="panel" aria-labelledby="titulo-sin-acceso" hidden>
+      <h2 id="titulo-sin-acceso">Acceso restringido</h2>
+      <p>Esta área es solo para el personal administrador. Inicia sesión con una cuenta de administrador.</p>
+      <div class="acciones-form">
+        <a class="boton" href="login.html">Iniciar sesión</a>
+        <a href="index.html">Volver al inicio</a>
+      </div>
+    </section>
+
+    <!-- ===== ÁREA DE ADMINISTRACIÓN ===== -->
+    <div id="area-admin" hidden>
+
+      <nav class="subnav" aria-label="Administración">
+        <ul>
+          <li><a href="gest_prod.html" aria-current="page">Productos</a></li>
+          <li><a href="gest_pedidos.html">Pedidos</a></li>
+          <li><button type="button" id="cerrar-sesion" class="boton boton-secundario">Cerrar sesión</button></li>
+        </ul>
+      </nav>
+
+      <h2 id="titulo-listado">Gestión de productos</h2>
+
+      <p id="estado-admin" class="ok" role="status"></p>
+      <p id="error-admin" class="error" role="alert" hidden></p>
+
+      <!-- ===== FORMULARIO DE ALTA / EDICIÓN ===== -->
+      <section id="panel-formulario" class="panel" aria-labelledby="titulo-formulario" hidden>
+        <h2 id="titulo-formulario">Nuevo producto</h2>
+
+        <form id="form-producto" method="post" novalidate>
+          <p id="error-formulario" class="error" role="alert" hidden></p>
+
+          <div class="rejilla-form">
+            <div class="campo">
+              <label for="nombre">Nombre del producto</label>
+              <input type="text" id="nombre" name="nombre" aria-describedby="error-nombre" required>
+              <p id="error-nombre" class="error" role="alert" hidden></p>
+            </div>
+
+            <div class="campo">
+              <label for="categoria">Categoría</label>
+              <select id="categoria" name="categoria" aria-describedby="error-categoria" required>
+                <option value="">Elige una categoría</option>
+                <option value="virgen-extra">Virgen extra</option>
+                <option value="ecologico">Ecológico</option>
+                <option value="temprano">Cosecha temprana</option>
+              </select>
+              <p id="error-categoria" class="error" role="alert" hidden></p>
+            </div>
+
+            <div class="campo">
+              <label for="productor">Productor</label>
+              <input type="text" id="productor" name="productor" aria-describedby="error-productor" required>
+              <p id="error-productor" class="error" role="alert" hidden></p>
+            </div>
+
+            <div class="campo">
+              <label for="origen">Origen (provincia)</label>
+              <input type="text" id="origen" name="origen" aria-describedby="error-origen" required>
+              <p id="error-origen" class="error" role="alert" hidden></p>
+            </div>
+
+            <div class="campo">
+              <label for="variedad">Variedad de aceituna</label>
+              <input type="text" id="variedad" name="variedad" aria-describedby="error-variedad" required>
+              <p id="error-variedad" class="error" role="alert" hidden></p>
+            </div>
+
+            <div class="campo">
+              <label for="formato">Formato (ml)</label>
+              <input type="number" id="formato" name="formato" min="1" max="10000" step="1"
+                     inputmode="numeric" aria-describedby="error-formato" required>
+              <p id="error-formato" class="error" role="alert" hidden></p>
+            </div>
+
+            <div class="campo">
+              <label for="precio">Precio (€)</label>
+              <input type="number" id="precio" name="precio" min="0.01" step="0.01"
+                     inputmode="decimal" aria-describedby="error-precio" required>
+              <p id="error-precio" class="error" role="alert" hidden></p>
+            </div>
+
+            <div class="campo">
+              <label for="stock">Existencias (unidades)</label>
+              <input type="number" id="stock" name="stock" min="0" step="1"
+                     inputmode="numeric" aria-describedby="error-stock" required>
+              <p id="error-stock" class="error" role="alert" hidden></p>
+            </div>
+
+            <div class="campo campo-ancho">
+              <label for="descripcion">Descripción</label>
+              <textarea id="descripcion" name="descripcion" rows="4"
+                        aria-describedby="error-descripcion" required></textarea>
+              <p id="error-descripcion" class="error" role="alert" hidden></p>
+            </div>
+          </div>
+
+          <div class="acciones-form">
+            <button type="submit" id="boton-guardar" class="boton">Guardar producto</button>
+            <button type="button" id="boton-cancelar" class="boton boton-secundario">Cancelar</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ===== LISTADO ===== -->
+      <section aria-labelledby="titulo-listado">
+        <div class="barra-admin">
+          <p id="resumen-productos" class="resultados" aria-live="polite"></p>
+          <button type="button" id="boton-nuevo" class="boton">Nuevo producto</button>
+        </div>
+
+        <div class="tabla-contenedor">
+          <table class="tabla-admin">
+            <caption class="solo-lectores">Listado de productos</caption>
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Formato</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="lista-admin-productos">
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <noscript>
+      <p>Necesitas activar JavaScript para usar la administración de este prototipo.</p>
+    </noscript>
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <p>Oleum · Práctica de Arquitectura y Diseño de Sistemas Web y C/S · Curso 2026/2027</p>
+    <p><a href="gest_prod.html">Área de administración</a></p>
+  </footer>
+
+  <script src="assets/js/datos-productos.js"></script>
+  <script src="assets/js/datos-usuarios.js"></script>
+  <script src="assets/js/comun.js"></script>
+  <script src="assets/js/validacion.js"></script>
+  <script src="assets/js/gest_prod.js"></script>
+</body>
+</html>
