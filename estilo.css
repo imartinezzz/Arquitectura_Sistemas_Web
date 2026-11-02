@@ -616,3 +616,50 @@ input[readonly] {
 .estado-entregado { background: #dcefd9; color: #1f4d1f; }
 .estado-cancelado { background: #f6dcdc; color: #7d1d22; }
 .estado-enviado { background: #dde8f6; color: #1d3f73; }
+
+/* - 12. ADMINISTRACIÓN (gest_prod.html, gest_pedidos.html) - */
+.subnav ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-4);
+  margin-bottom: var(--espacio-4);
+  padding-bottom: var(--espacio-3);
+  border-bottom: 1px solid var(--color-borde);
+}
+.subnav a[aria-current="page"] { font-weight: 700; }
+
+.barra-admin {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  margin-bottom: var(--espacio-3);
+}
+.barra-admin p { margin: 0; }
+
+#area-admin .panel { margin-bottom: var(--espacio-4); }
+
+.rejilla-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--espacio-3);
+}
+.rejilla-form .campo-ancho { grid-column: 1 / -1; }
+#form-producto { display: flex; flex-direction: column; gap: var(--espacio-3); }
+textarea { resize: vertical; }
+
+.tabla-admin td { vertical-align: top; }
+.tabla-admin .acciones-linea { margin-top: 0; }
+
+.filtros-pedidos { grid-template-columns: minmax(11rem, 20rem); }
+
+.form-estado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-3);
+}
+.form-estado .campo { min-width: 14rem; }
