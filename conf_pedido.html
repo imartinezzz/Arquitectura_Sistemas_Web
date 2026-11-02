@@ -1,1 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Confirmar pedido · Oleum</title>
+  <meta name="description" content="Indica tu dirección de envío, revisa el resumen y confirma tu pedido en Oleum. El pago es simulado.">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
 
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <a class="logo" href="index.html">Oleum</a>
+
+    <nav class="menu" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#catalogo">Catálogo</a></li>
+        <li><a href="cart.html">Carrito (<span id="contador-carrito">0</span>)</a></li>
+        <li><a href="perfil.html">Mi cuenta</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="register.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <h1>Confirmar pedido</h1>
+
+    <!-- ===== CARRITO VACÍO: no se puede continuar ===== -->
+    <section id="pedido-vacio" class="panel" aria-labelledby="titulo-vacio" hidden>
+      <h2 id="titulo-vacio">No hay nada que confirmar</h2>
+      <p>Tu carrito está vacío, así que todavía no puedes hacer un pedido.</p>
+      <a class="boton" href="index.html#catalogo">Ir al catálogo</a>
+    </section>
+
+    <!-- ===== FORMULARIO + RESUMEN ===== -->
+    <div id="pedido-formulario" class="pedido-layout" hidden>
+
+      <section class="panel" aria-labelledby="titulo-envio">
+        <h2 id="titulo-envio">Datos de envío y pago</h2>
+
+        <form id="form-pedido" method="post" novalidate>
+
+          <!-- Error general (stock insuficiente, etc.) -->
+          <p id="error-formulario" class="error" role="alert" hidden></p>
+
+          <div class="campo">
+            <label for="nombre">Nombre y apellidos</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name"
+                   aria-describedby="error-nombre" required>
+            <p id="error-nombre" class="error" role="alert" hidden></p>
+          </div>
+
+          <div class="campo">
+            <label for="direccion">Dirección (calle, número, piso)</label>
+            <input type="text" id="direccion" name="direccion" autocomplete="street-address"
+                   aria-describedby="error-direccion" required>
+            <p id="error-direccion" class="error" role="alert" hidden></p>
+          </div>
+
+          <div class="campo">
+            <label for="cp">Código postal</label>
+            <input type="text" id="cp" name="cp" inputmode="numeric" maxlength="5"
+                   autocomplete="postal-code" aria-describedby="error-cp" required>
+            <p id="error-cp" class="error" role="alert" hidden></p>
+          </div>
+
+          <div class="campo">
+            <label for="ciudad">Ciudad</label>
+            <input type="text" id="ciudad" name="ciudad" autocomplete="address-level2"
+                   aria-describedby="error-ciudad" required>
+            <p id="error-ciudad" class="error" role="alert" hidden></p>
+          </div>
+
+          <div class="campo">
+            <label for="telefono">Teléfono de contacto (9 dígitos)</label>
+            <input type="tel" id="telefono" name="telefono" inputmode="numeric"
+                   autocomplete="tel" aria-describedby="error-telefono" required>
+            <p id="error-telefono" class="error" role="alert" hidden></p>
+          </div>
+
+          <fieldset>
+            <legend>Método de pago (simulado)</legend>
+            <p class="ayuda">Es una simulación: no se cobra nada ni se guardan datos de tarjeta.</p>
+
+            <div class="opcion">
+              <input type="radio" id="pago-tarjeta" name="pago" value="Tarjeta (simulado)"
+                     aria-describedby="error-pago">
+              <label for="pago-tarjeta">Tarjeta (simulado)</label>
+            </div>
+            <div class="opcion">
+              <input type="radio" id="pago-transferencia" name="pago" value="Transferencia (simulado)"
+                     aria-describedby="error-pago">
+              <label for="pago-transferencia">Transferencia (simulado)</label>
+            </div>
+
+            <p id="error-pago" class="error" role="alert" hidden></p>
+          </fieldset>
+
+          <div class="acciones-form">
+            <button type="submit" class="boton">Confirmar pedido</button>
+            <a href="cart.html">Volver al carrito</a>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="titulo-resumen">
+        <h2 id="titulo-resumen">Resumen del pedido</h2>
+        <div class="tabla-contenedor">
+          <table class="tabla-carrito">
+            <caption class="solo-lectores">Productos del pedido</caption>
+            <thead>
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody id="resumen-lineas">
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">Total</th>
+                <td id="resumen-total"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== PEDIDO CONFIRMADO ===== -->
+    <section id="pedido-confirmado" class="panel" aria-labelledby="titulo-confirmado" hidden>
+      <h2 id="titulo-confirmado" tabindex="-1">¡Pedido confirmado!</h2>
+      <p>Gracias por tu compra. Esto es una simulación: no se ha realizado ningún cobro.</p>
+
+      <dl class="ficha">
+        <div><dt>Pedido</dt><dd id="conf-numero"></dd></div>
+        <div><dt>Fecha</dt><dd id="conf-fecha"></dd></div>
+        <div><dt>Envío a</dt><dd id="conf-envio"></dd></div>
+        <div><dt>Pago</dt><dd id="conf-pago"></dd></div>
+      </dl>
+
+      <div class="tabla-contenedor">
+        <table class="tabla-carrito">
+          <caption class="solo-lectores">Productos del pedido confirmado</caption>
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="conf-lineas">
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">Total</th>
+              <td id="conf-total"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="acciones-carrito">
+        <a class="boton" href="perfil.html">Ver mis pedidos</a>
+        <a class="boton boton-secundario" href="index.html">Volver al inicio</a>
+      </div>
+    </section>
+
+    <noscript>
+      <p>Necesitas activar JavaScript para confirmar pedidos en este prototipo.</p>
+    </noscript>
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <p>Oleum · Práctica de Arquitectura y Diseño de Sistemas Web y C/S · Curso 2026/2027</p>
+    <p><a href="gest_prod.html">Área de administración</a></p>
+  </footer>
+
+  <script src="assets/js/datos-productos.js"></script>
+  <script src="assets/js/comun.js"></script>
+  <script src="assets/js/validacion.js"></script>
+  <script src="assets/js/conf_pedido.js"></script>
+</body>
+</html>
