@@ -515,3 +515,104 @@ th {
 }
 
 #titulo-carrito:focus { outline: none; }
+
+/* - 10. CONFIRMACIÓN DE PEDIDO (conf_pedido.html) - */
+input[type="radio"],
+input[type="checkbox"] {
+  width: auto;
+}
+
+fieldset {
+  margin: 0;
+  padding: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+
+legend {
+  padding: 0 var(--espacio-2);
+  font-weight: 600;
+}
+
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-1) 0;
+}
+
+.ayuda {
+  margin: 0 0 var(--espacio-2);
+  color: var(--color-texto-suave);
+  font-size: 0.9rem;
+}
+
+.pedido-layout {
+  display: grid;
+  gap: var(--espacio-4);
+}
+
+.pedido-layout form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.acciones-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+#titulo-confirmado:focus { outline: none; }
+
+@media (min-width: 48em) {
+  .pedido-layout { grid-template-columns: 3fr 2fr; align-items: start; }
+}
+
+/* - 11. ÁREA DEL CLIENTE (perfil.html) - */
+#area-cliente { display: grid; gap: var(--espacio-4); }
+
+#form-perfil {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  max-width: 32rem;
+}
+
+input[readonly] {
+  background: var(--color-hoja);
+  color: var(--color-texto-suave);
+}
+
+.lista-pedidos {
+  display: grid;
+  gap: var(--espacio-3);
+}
+
+.pedido {
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo);
+}
+.pedido summary {
+  padding: var(--espacio-3);
+  cursor: pointer;
+}
+.pedido-cuerpo { padding: 0 var(--espacio-3) var(--espacio-3); }
+
+/* Estados de pedido: el texto siempre acompaña al color */
+.estado {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 999px;
+  background: var(--color-hoja);
+  color: var(--color-oliva-oscuro);
+  border: 1px solid var(--color-borde);
+}
+.estado-entregado { background: #dcefd9; color: #1f4d1f; }
+.estado-cancelado { background: #f6dcdc; color: #7d1d22; }
+.estado-enviado { background: #dde8f6; color: #1d3f73; }
