@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de pedidos · Oleum</title>
+  <meta name="description" content="Área de administración de Oleum: consulta de pedidos y cambio de su estado.">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
 
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <a class="logo" href="index.html">Oleum</a>
+
+    <nav class="menu" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#catalogo">Catálogo</a></li>
+        <li><a href="cart.html">Carrito (<span id="contador-carrito">0</span>)</a></li>
+        <li><a href="perfil.html">Mi cuenta</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="register.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <h1>Administración</h1>
+
+    <!-- ===== SIN PERMISOS ===== -->
+    <section id="sin-acceso" class="panel" aria-labelledby="titulo-sin-acceso" hidden>
+      <h2 id="titulo-sin-acceso">Acceso restringido</h2>
+      <p>Esta área es solo para el personal administrador. Inicia sesión con una cuenta de administrador.</p>
+      <div class="acciones-form">
+        <a class="boton" href="login.html">Iniciar sesión</a>
+        <a href="index.html">Volver al inicio</a>
+      </div>
+    </section>
+
+    <!-- ===== ÁREA DE ADMINISTRACIÓN ===== -->
+    <div id="area-admin" hidden>
+
+      <nav class="subnav" aria-label="Administración">
+        <ul>
+          <li><a href="gest_prod.html">Productos</a></li>
+          <li><a href="gest_pedidos.html" aria-current="page">Pedidos</a></li>
+          <li><button type="button" id="cerrar-sesion" class="boton boton-secundario">Cerrar sesión</button></li>
+        </ul>
+      </nav>
+
+      <h2 id="titulo-pedidos">Gestión de pedidos</h2>
+
+      <p id="estado-admin" class="ok" role="status"></p>
+
+      <div class="filtros filtros-pedidos">
+        <div class="campo">
+          <label for="filtro-estado">Filtrar por estado</label>
+          <select id="filtro-estado" name="filtro-estado">
+            <option value="">Todos</option>
+            <option value="recibido">Recibido</option>
+            <option value="preparacion">En preparación</option>
+            <option value="enviado">Enviado</option>
+            <option value="entregado">Entregado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+      </div>
+
+      <p id="resumen-pedidos" class="resultados" aria-live="polite"></p>
+
+      <!-- La lista la rellena gest_pedidos.js -->
+      <ul id="lista-admin-pedidos" class="lista-pedidos"></ul>
+    </div>
+
+    <noscript>
+      <p>Necesitas activar JavaScript para usar la administración de este prototipo.</p>
+    </noscript>
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <p>Oleum · Práctica de Arquitectura y Diseño de Sistemas Web y C/S · Curso 2026/2027</p>
+    <p><a href="gest_prod.html">Área de administración</a></p>
+  </footer>
+
+  <script src="assets/js/datos-productos.js"></script>
+  <script src="assets/js/datos-usuarios.js"></script>
+  <script src="assets/js/datos-pedidos.js"></script>
+  <script src="assets/js/comun.js"></script>
+  <script src="assets/js/validacion.js"></script>
+  <script src="assets/js/gest_pedidos.js"></script>
+</body>
+</html>
