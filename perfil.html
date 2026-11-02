@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi cuenta · Oleum</title>
+  <meta name="description" content="Consulta y edita tus datos de cliente y revisa el historial de tus pedidos en Oleum.">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
 
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <a class="logo" href="index.html">Oleum</a>
+
+    <nav class="menu" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#catalogo">Catálogo</a></li>
+        <li><a href="cart.html">Carrito (<span id="contador-carrito">0</span>)</a></li>
+        <li><a href="perfil.html" aria-current="page">Mi cuenta</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="register.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <h1>Mi cuenta</h1>
+
+    <!-- ===== SIN SESIÓN ===== -->
+    <section id="sin-sesion" class="panel" aria-labelledby="titulo-sin-sesion" hidden>
+      <h2 id="titulo-sin-sesion">Necesitas iniciar sesión</h2>
+      <p>Para ver tus datos y tus pedidos tienes que acceder a tu cuenta.</p>
+      <div class="acciones-form">
+        <a class="boton" href="login.html">Iniciar sesión</a>
+        <a href="register.html">Crear una cuenta</a>
+      </div>
+    </section>
+
+    <!-- ===== SESIÓN DE ADMINISTRADOR ===== -->
+    <section id="es-admin" class="panel" aria-labelledby="titulo-es-admin" hidden>
+      <h2 id="titulo-es-admin">Has iniciado sesión como administrador</h2>
+      <p>Esta página es el área del cliente. Para gestionar la tienda usa el área de administración.</p>
+      <div class="acciones-form">
+        <a class="boton" href="gest_prod.html">Gestionar productos</a>
+        <a class="boton boton-secundario" href="gest_pedidos.html">Gestionar pedidos</a>
+        <button type="button" class="boton boton-secundario" data-cerrar-sesion>Cerrar sesión</button>
+      </div>
+    </section>
+
+    <!-- ===== ÁREA DEL CLIENTE ===== -->
+    <div id="area-cliente" hidden>
+
+      <p id="bienvenida" class="ok" role="status"></p>
+
+      <section class="panel" aria-labelledby="titulo-datos">
+        <h2 id="titulo-datos">Mis datos</h2>
+
+        <form id="form-perfil" method="post" novalidate>
+          <p id="error-formulario" class="error" role="alert" hidden></p>
+          <p id="mensaje-ok" class="ok" role="status" hidden></p>
+
+          <div class="campo">
+            <label for="nombre">Nombre y apellidos</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name"
+                   aria-describedby="error-nombre" required>
+            <p id="error-nombre" class="error" role="alert" hidden></p>
+          </div>
+
+          <div class="campo">
+            <label for="email">Correo electrónico (no se puede cambiar)</label>
+            <input type="email" id="email" name="email" autocomplete="email" readonly>
+          </div>
+
+          <div class="campo">
+            <label for="direccion">Dirección de envío habitual</label>
+            <input type="text" id="direccion" name="direccion" autocomplete="street-address"
+                   aria-describedby="error-direccion">
+            <p id="error-direccion" class="error" role="alert" hidden></p>
+          </div>
+
+          <div class="acciones-form">
+            <button type="submit" class="boton">Guardar cambios</button>
+            <button type="button" class="boton boton-secundario" data-cerrar-sesion>Cerrar sesión</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel seccion-historial" aria-labelledby="titulo-historial">
+        <h2 id="titulo-historial">Historial de pedidos</h2>
+
+        <p id="sin-pedidos" hidden>
+          Todavía no has hecho ningún pedido. <a href="index.html#catalogo">Ir al catálogo</a>
+        </p>
+
+        <!-- Lista de pedidos: la rellena perfil.js -->
+        <ul id="lista-pedidos" class="lista-pedidos"></ul>
+      </section>
+    </div>
+
+    <noscript>
+      <p>Necesitas activar JavaScript para ver tu cuenta en este prototipo.</p>
+    </noscript>
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <p>Oleum · Práctica de Arquitectura y Diseño de Sistemas Web y C/S · Curso 2026/2027</p>
+    <p><a href="gest_prod.html">Área de administración</a></p>
+  </footer>
+
+  <script src="assets/js/datos-productos.js"></script>
+  <script src="assets/js/datos-usuarios.js"></script>
+  <script src="assets/js/datos-pedidos.js"></script>
+  <script src="assets/js/comun.js"></script>
+  <script src="assets/js/validacion.js"></script>
+  <script src="assets/js/perfil.js"></script>
+</body>
+</html>
