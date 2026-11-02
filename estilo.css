@@ -1,1 +1,424 @@
+/* ==========================================================
+   Oleum · estilos.css
+   Sistema visual compartido por TODAS las páginas.
+   Orden: 1 variables · 2 base · 3 estructura · 4 componentes
+          · 5 catálogo · 6 responsive
+   ========================================================== */
 
+/* - 1. VARIABLES (paleta, tipografía, espaciado) - */
+:root {
+  /* Colores */
+  --color-fondo: #fbfbf7;
+  --color-superficie: #ffffff;
+  --color-texto: #1f2616;
+  --color-texto-suave: #4d5642;
+  --color-oliva: #3d4a1c;        /* acción principal, cabecera */
+  --color-oliva-oscuro: #2a3412;
+  --color-hoja: #e8eddb;         /* fondos suaves */
+  --color-aceite: #d9ad26;       /* acento dorado */
+  --color-borde: #cdd3bf;
+  --color-error: #a4262c;
+  --color-ok: #2e6b2e;
+  --color-foco: #1d4ed8;
+
+  /* Tipografía (fuentes del sistema: no dependen de internet) */
+  --fuente-titulos: Georgia, "Times New Roman", serif;
+  --fuente-texto: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Espaciado */
+  --espacio-1: 0.25rem;
+  --espacio-2: 0.5rem;
+  --espacio-3: 1rem;
+  --espacio-4: 1.5rem;
+  --espacio-5: 2.5rem;
+
+  --radio: 6px;
+  --ancho-max: 70rem;
+}
+
+/* - 2. BASE - */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-texto);
+  background: var(--color-fondo);
+}
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulos);
+  line-height: 1.2;
+  color: var(--color-oliva-oscuro);
+  margin: 0 0 var(--espacio-3);
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.15rem; }
+
+p { margin: 0 0 var(--espacio-3); max-width: 65ch; }
+
+a { color: var(--color-oliva); }
+a:hover { color: var(--color-oliva-oscuro); }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* Foco visible para navegación con teclado */
+:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+/* El atributo hidden debe ganar siempre */
+[hidden] { display: none !important; }
+
+/* Enlace para saltar la cabecera (visible solo al enfocarlo) */
+.saltar-contenido {
+  position: absolute;
+  left: var(--espacio-2);
+  top: -4rem;
+  padding: var(--espacio-2) var(--espacio-3);
+  background: var(--color-aceite);
+  color: var(--color-texto);
+  font-weight: 600;
+  z-index: 10;
+}
+.saltar-contenido:focus { top: var(--espacio-2); }
+
+/* - 3. ESTRUCTURA (cabecera, main, pie) - */
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2) var(--espacio-4);
+  padding: var(--espacio-3);
+  background: var(--color-oliva);
+}
+
+.logo {
+  font-family: var(--fuente-titulos);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+}
+.logo:hover { color: var(--color-aceite); }
+
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-1) var(--espacio-3);
+}
+
+.menu a {
+  display: inline-block;
+  padding: var(--espacio-1) 0;
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.menu a:hover { border-bottom-color: var(--color-aceite); color: #ffffff; }
+.menu a[aria-current="page"] { border-bottom-color: var(--color-aceite); font-weight: 600; }
+
+/* En la cabecera verde el foco necesita un color claro */
+.cabecera :focus-visible { outline-color: #ffffff; }
+
+main {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: var(--espacio-4) var(--espacio-3);
+}
+
+.pie {
+  margin-top: var(--espacio-5);
+  padding: var(--espacio-4) var(--espacio-3);
+  background: var(--color-oliva-oscuro);
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+.pie p { margin-bottom: var(--espacio-2); max-width: none; }
+.pie a { color: #ffffff; }
+.pie :focus-visible { outline-color: #ffffff; }
+
+/* - 4. COMPONENTES REUTILIZABLES - */
+
+/* Botones */
+.boton {
+  display: inline-block;
+  padding: 0.65rem 1.25rem;
+  font: inherit;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  color: #ffffff;
+  background: var(--color-oliva);
+  border: 2px solid var(--color-oliva);
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+.boton:hover { background: var(--color-oliva-oscuro); border-color: var(--color-oliva-oscuro); color: #ffffff; }
+
+.boton-secundario {
+  color: var(--color-oliva);
+  background: transparent;
+}
+.boton-secundario:hover { color: #ffffff; }
+
+.boton-peligro { background: var(--color-error); border-color: var(--color-error); }
+.boton-peligro:hover { background: #7d1d22; border-color: #7d1d22; }
+
+.boton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Formularios (válidos para login, registro, perfil, admin...) */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.campo label { font-weight: 600; }
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font: inherit;
+  color: var(--color-texto);
+  background: var(--color-superficie);
+  border: 1px solid #7b836d;
+  border-radius: var(--radio);
+}
+
+/* Campo con error: el JS añade la clase "invalido" o aria-invalid="true" */
+input.invalido,
+select.invalido,
+textarea.invalido,
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border: 2px solid var(--color-error);
+}
+
+.error {
+  margin: 0;
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.ok {
+  margin: 0;
+  color: var(--color-ok);
+  font-weight: 600;
+}
+
+/* Tarjetas / paneles genéricos */
+.panel {
+  padding: var(--espacio-4);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+
+/* Tablas (carrito, historial, admin). Envolverlas en .tabla-contenedor */
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+th {
+  background: var(--color-hoja);
+  color: var(--color-oliva-oscuro);
+}
+
+/* - 5. PÁGINA DE INICIO Y CATÁLOGO - */
+.portada {
+  padding: var(--espacio-5) var(--espacio-4);
+  margin-bottom: var(--espacio-5);
+  background: var(--color-hoja);
+  border-left: 6px solid var(--color-aceite);
+  border-radius: var(--radio);
+}
+
+.portada h1 { max-width: 22ch; }
+
+/* Filtros */
+.filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--espacio-3);
+  align-items: end;
+  padding: var(--espacio-4);
+  margin-bottom: var(--espacio-3);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+
+.filtros .acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+}
+
+.filtros .error { grid-column: 1 / -1; }
+
+.resultados {
+  color: var(--color-texto-suave);
+  font-weight: 600;
+}
+
+/* Lista de productos (la rellena catalogo.js con <li class="tarjeta-producto">) */
+.lista-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--espacio-4);
+}
+
+.tarjeta-producto {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+
+.tarjeta-producto img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--color-hoja);
+}
+
+.tarjeta-cuerpo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--espacio-1);
+  padding: var(--espacio-3);
+}
+
+.tarjeta-cuerpo h3 { margin-bottom: 0; }
+.tarjeta-cuerpo h3 a { text-decoration: none; }
+.tarjeta-cuerpo h3 a:hover { text-decoration: underline; }
+
+.producto-productor,
+.producto-formato {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: 0.9rem;
+}
+
+.producto-precio {
+  margin: var(--espacio-2) 0 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-oliva-oscuro);
+}
+
+.disponibilidad {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-ok);
+}
+.disponibilidad.agotado { color: var(--color-error); }
+
+.tarjeta-cuerpo .boton { margin-top: auto; }
+
+/* Paginación */
+.paginacion {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-4);
+}
+
+.paginacion button {
+  min-width: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  color: var(--color-oliva);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-oliva);
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.paginacion button[aria-current="page"] {
+  color: #ffffff;
+  background: var(--color-oliva);
+  font-weight: 700;
+}
+
+.paginacion button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* - 6. RESPONSIVE - */
+/* Móvil primero: lo anterior ya funciona a 375 px. Aquí se amplía. */
+@media (min-width: 48em) {
+  h1 { font-size: 2.6rem; }
+  h2 { font-size: 1.8rem; }
+
+  .cabecera { padding: var(--espacio-3) var(--espacio-4); }
+  main { padding: var(--espacio-5) var(--espacio-4); }
+}
+
+/* Respetar a quien reduce el movimiento */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* - 7. PÁGINAS DE ACCESO (login, registro) - */
+.formulario-acceso {
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.formulario-acceso form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.formulario-acceso .boton { align-self: flex-start; }
+
+.alternativa {
+  margin: var(--espacio-4) 0 0;
+}
