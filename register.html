@@ -1,1 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crear cuenta · Oleum</title>
+  <meta name="description" content="Crea tu cuenta en Oleum para comprar aceite de oliva virgen extra y consultar tus pedidos.">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
 
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <a class="logo" href="index.html">Oleum</a>
+
+    <nav class="menu" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#catalogo">Catálogo</a></li>
+        <li><a href="cart.html">Carrito (<span id="contador-carrito">0</span>)</a></li>
+        <li><a href="perfil.html">Mi cuenta</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="register.html" aria-current="page">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <section class="panel formulario-acceso" aria-labelledby="titulo-registro">
+      <h1 id="titulo-registro">Crear cuenta</h1>
+
+      <form id="form-registro" method="post" novalidate>
+
+        <!-- Error general (correo ya registrado, etc.) -->
+        <p id="error-formulario" class="error" role="alert" hidden></p>
+
+        <div class="campo">
+          <label for="nombre">Nombre y apellidos</label>
+          <input type="text" id="nombre" name="nombre" autocomplete="name"
+                 aria-describedby="error-nombre" required>
+          <p id="error-nombre" class="error" role="alert" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" autocomplete="email"
+                 aria-describedby="error-email" required>
+          <p id="error-email" class="error" role="alert" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="clave">Contraseña (mínimo 6 caracteres)</label>
+          <input type="password" id="clave" name="clave" autocomplete="new-password"
+                 aria-describedby="error-clave" required>
+          <p id="error-clave" class="error" role="alert" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="clave2">Repite la contraseña</label>
+          <input type="password" id="clave2" name="clave2" autocomplete="new-password"
+                 aria-describedby="error-clave2" required>
+          <p id="error-clave2" class="error" role="alert" hidden></p>
+        </div>
+
+        <button type="submit" class="boton">Crear cuenta</button>
+      </form>
+
+      <p class="alternativa">¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+    </section>
+  </main>
+
+  <!-- ===== PIE  ===== -->
+  <footer class="pie">
+    <p>Oleum · Práctica de Arquitectura y Diseño de Sistemas Web y C/S · Curso 2026/2027</p>
+    <p><a href="admin.html">Área de administración</a></p>
+  </footer>
+
+  <script src="assets/js/comun.js"></script>
+  <script src="assets/js/validacion.js"></script>
+  <script src="assets/js/registro.js"></script>
+</body>
+</html>
