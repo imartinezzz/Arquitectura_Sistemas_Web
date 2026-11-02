@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oleum · Aceite de oliva virgen extra</title>
+  <meta name="description" content="Tienda online de aceite de oliva virgen extra de distintos productores, variedades y zonas de origen.">
+  <link rel="stylesheet" href="assets/css/estilos.css">
+</head>
+<body>
 
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <a class="logo" href="index.html">Oleum</a>
+
+    <nav class="menu" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html" aria-current="page">Inicio</a></li>
+        <li><a href="index.html#catalogo">Catálogo</a></li>
+        <li><a href="carrito.html">Carrito (<span id="contador-carrito">0</span>)</a></li>
+        <li><a href="cliente.html">Mi cuenta</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="registro.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ===== PORTADA ===== -->
+    <section class="portada" aria-labelledby="titulo-portada">
+      <h1 id="titulo-portada">Aceite de oliva virgen extra, directo del productor</h1>
+      <p>Elige por variedad, origen y formato. </p>
+      <a class="boton" href="#catalogo">Ver catálogo</a>
+    </section>
+
+    <!-- ===== CATÁLOGO ===== -->
+    <section id="catalogo" class="catalogo" aria-labelledby="titulo-catalogo">
+      <h2 id="titulo-catalogo">Catálogo</h2>
+
+      <!-- Búsqueda y filtros: categoría y rango de precio como mínimo -->
+      <form id="filtros" class="filtros" role="search" aria-label="Buscar y filtrar productos">
+        <div class="campo">
+          <label for="busqueda">Buscar</label>
+          <input type="search" id="busqueda" name="busqueda" placeholder="Nombre, productor o variedad">
+        </div>
+
+        <div class="campo">
+          <label for="categoria">Categoría</label>
+          <select id="categoria" name="categoria">
+            <option value="">Todas</option>
+            <option value="virgen-extra">Virgen extra</option>
+            <option value="ecologico">Ecológico</option>
+            <option value="temprano">Cosecha temprana</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="precio-min">Precio mínimo (€)</label>
+          <input type="number" id="precio-min" name="precio-min" min="0" step="0.5" inputmode="decimal">
+        </div>
+
+        <div class="campo">
+          <label for="precio-max">Precio máximo (€)</label>
+          <input type="number" id="precio-max" name="precio-max" min="0" step="0.5" inputmode="decimal">
+        </div>
+
+        <div class="acciones">
+          <button type="submit" class="boton">Aplicar filtros</button>
+          <button type="reset" class="boton boton-secundario">Limpiar</button>
+        </div>
+
+        <!-- Mensaje de error de los filtros -->
+        <p id="error-filtros" class="error" role="alert" hidden></p>
+      </form>
+
+      <p id="resultados" class="resultados" aria-live="polite"></p>
+
+      <!-- Los productos los pinta catalogo.js a partir de datos-productos.js -->
+      <ul id="lista-productos" class="lista-productos">
+      </ul>
+
+      <noscript>
+        <p>Necesitas activar JavaScript para ver el catálogo de este prototipo.</p>
+      </noscript>
+
+      <!-- Paginación: la rellena catalogo.js -->
+      <nav id="paginacion" class="paginacion" aria-label="Paginación del catálogo"></nav>
+    </section>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <p>Oleum · Práctica de Arquitectura y Diseño de Sistemas Web y C/S · Curso 2026/2027</p>
+    <p><a href="admin.html">Área de administración</a></p>
+  </footer>
+
+  <!-- Datos simulados primero, después la lógica -->
+  <script src="assets/js/datos-productos.js"></script>
+  <script src="assets/js/comun.js"></script>
+  <script src="assets/js/catalogo.js"></script>
+</body>
+</html>
