@@ -422,3 +422,47 @@ th {
 .alternativa {
   margin: var(--espacio-4) 0 0;
 }
+
+/* - 8. DETALLE DE PRODUCTO (item.html) - */
+.migas {
+  margin-bottom: var(--espacio-4);
+  color: var(--color-texto-suave);
+  font-size: 0.9rem;
+}
+
+.detalle-producto {
+  display: grid;
+  gap: var(--espacio-4);
+}
+
+.detalle-producto img {
+  width: 100%;
+  max-height: 28rem;
+  object-fit: contain;
+  background: var(--color-hoja);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+
+.detalle-info .producto-precio { font-size: 1.6rem; }
+
+.ficha {
+  display: grid;
+  gap: var(--espacio-2);
+  margin: 0 0 var(--espacio-3);
+}
+.ficha div { display: flex; gap: var(--espacio-2); }
+.ficha dt { min-width: 6rem; font-weight: 600; }
+.ficha dd { margin: 0; }
+
+.form-cantidad {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  max-width: 16rem;
+}
+.form-cantidad .boton { align-self: flex-start; }
+
+@media (min-width: 48em) {
+  .detalle-producto { grid-template-columns: 1fr 1fr; align-items: start; }
+}
