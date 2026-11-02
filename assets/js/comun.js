@@ -111,3 +111,95 @@ if (document.readyState === "loading") {
 } else {
   actualizarContador();
 }
+
+/* ==========================================================
+   Pedidos confirmados (simulados) en localStorage ("oleum_pedidos").
+   Cada pedido guarda el precio aplicado en cada línea (histórico).
+   ========================================================== */
+const CLAVE_PEDIDOS = "oleum_pedidos";
+
+const Pedidos = {
+  obtener: function () {
+    try {
+      const datos = JSON.parse(localStorage.getItem(CLAVE_PEDIDOS));
+      return Array.isArray(datos) ? datos : [];
+    } catch (e) {
+      return [];
+    }
+  },
+
+  guardar: function (lista) {
+    try {
+      localStorage.setItem(CLAVE_PEDIDOS, JSON.stringify(lista));
+    } catch (e) { /* sin almacenamiento: no se conserva */ }
+  },
+
+  siguienteNumero: function () {
+    return "OL-" + (2001 + this.obtener().length);
+  },
+
+  anadir: function (pedido) {
+    const lista = this.obtener();
+    lista.push(pedido);
+    this.guardar(lista);
+  }
+};
+
+/* ==========================================================
+   Usuarios y sesión simulada.
+   "oleum_usuarios": usuarios registrados en el navegador.
+   "oleum_session": { nombre, email, rol } del usuario conectado.
+   ========================================================== */
+const CLAVE_USUARIOS = "oleum_usuarios";
+const CLAVE_SESION = "oleum_session";
+
+/* Hash SIMULADO (no es seguro): solo evita guardar la contraseña en claro. */
+function hashClave(texto) {
+  let h = 5381;
+  for (let i = 0; i < texto.length; i++) { h = ((h << 5) + h + texto.charCodeAt(i)) | 0; }
+  return "h" + (h >>> 0).toString(16);
+}
+
+const Usuarios = {
+  registrados: function () {
+    try {
+      const datos = JSON.parse(localStorage.getItem(CLAVE_USUARIOS));
+      return Array.isArray(datos) ? datos : [];
+    } catch (e) {
+      return [];
+    }
+  },
+
+  /* Usuarios de ejemplo + registrados */
+  todos: function () {
+    const base = (typeof USUARIOS !== "undefined") ? USUARIOS : [];
+    return base.concat(this.registrados());
+  },
+
+  buscarPorEmail: function (email) {
+    const buscado = String(email).trim().toLowerCase();
+    return this.todos().find(function (u) { return u.email.toLowerCase() === buscado; }) || null;
+  },
+
+  anadir: function (usuario) {
+    const lista = this.registrados();
+    usuario.id = 100 + lista.length + 1;
+    lista.push(usuario);
+    try { localStorage.setItem(CLAVE_USUARIOS, JSON.stringify(lista)); } catch (e) { /* sin almacenamiento */ }
+    return usuario;
+  }
+};
+
+const Sesion = {
+  actual: function () {
+    try { return JSON.parse(localStorage.getItem(CLAVE_SESION)); } catch (e) { return null; }
+  },
+  iniciar: function (usuario) {
+    try {
+      localStorage.setItem(CLAVE_SESION, JSON.stringify({ nombre: usuario.nombre, email: usuario.email, rol: usuario.rol }));
+    } catch (e) { /* sin almacenamiento */ }
+  },
+  cerrar: function () {
+    try { localStorage.removeItem(CLAVE_SESION); } catch (e) { /* sin almacenamiento */ }
+  }
+};
