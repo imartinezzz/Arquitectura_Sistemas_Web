@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iniciar sesión · Oleum</title>
+  <meta name="description" content="Accede a tu cuenta de Oleum para gestionar tu carrito y tus pedidos.">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
 
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <a class="logo" href="index.html">Oleum</a>
+
+    <nav class="menu" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#catalogo">Catálogo</a></li>
+        <li><a href="cart.html">Carrito (<span id="contador-carrito">0</span>)</a></li>
+        <li><a href="perfil.html">Mi cuenta</a></li>
+        <li><a href="login.html" aria-current="page">Iniciar sesión</a></li>
+        <li><a href="register.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <section class="panel formulario-acceso" aria-labelledby="titulo-login">
+      <h1 id="titulo-login">Iniciar sesión</h1>
+
+      <form id="form-login" method="post" novalidate>
+
+        <!-- Error general (credenciales incorrectas, etc.) -->
+        <p id="error-formulario" class="error" role="alert" hidden></p>
+
+        <div class="campo">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" autocomplete="email"
+                 aria-describedby="error-email" required>
+          <p id="error-email" class="error" role="alert" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="clave">Contraseña</label>
+          <input type="password" id="clave" name="clave" autocomplete="current-password"
+                 aria-describedby="error-clave" required>
+          <p id="error-clave" class="error" role="alert" hidden></p>
+        </div>
+
+        <button type="submit" class="boton">Iniciar sesión</button>
+      </form>
+
+      <p class="alternativa">¿Aún no tienes cuenta? <a href="register.html">Regístrate</a></p>
+    </section>
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <p>Oleum · Práctica de Arquitectura y Diseño de Sistemas Web y C/S · Curso 2026/2027</p>
+    <p><a href="admin.html">Área de administración</a></p>
+  </footer>
+
+  <script src="assets/js/comun.js"></script>
+  <script src="assets/js/validacion.js"></script>
+  <script src="assets/js/login.js"></script>
+</body>
+</html>
