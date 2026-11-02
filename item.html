@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detalle de producto · Oleum</title>
+  <meta name="description" content="Ficha de producto de Oleum: descripción, origen, variedad, formato, precio y existencias.">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
 
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <a class="logo" href="index.html">Oleum</a>
+
+    <nav class="menu" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#catalogo">Catálogo</a></li>
+        <li><a href="cart.html">Carrito (<span id="contador-carrito">0</span>)</a></li>
+        <li><a href="perfil.html">Mi cuenta</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="register.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido">
+
+    <nav class="migas" aria-label="Ruta de navegación">
+      <a href="index.html">Inicio</a> /
+      <a href="index.html#catalogo">Catálogo</a> /
+      <span id="miga-producto">Producto</span>
+    </nav>
+
+    <!-- ===== FICHA DEL PRODUCTO (la rellena item.js) ===== -->
+    <section id="detalle" class="detalle-producto" aria-labelledby="producto-nombre" hidden>
+
+      <img id="producto-imagen" src="assets/img/aceite.svg" alt="" width="400" height="300">
+
+      <div class="detalle-info">
+        <h1 id="producto-nombre">Cargando…</h1>
+        <p id="producto-precio" class="producto-precio"></p>
+        <p id="producto-disponibilidad" class="disponibilidad"></p>
+        <p id="producto-descripcion"></p>
+
+        <dl class="ficha">
+          <div><dt>Productor</dt><dd id="producto-productor"></dd></div>
+          <div><dt>Origen</dt><dd id="producto-origen"></dd></div>
+          <div><dt>Variedad</dt><dd id="producto-variedad"></dd></div>
+          <div><dt>Categoría</dt><dd id="producto-categoria"></dd></div>
+          <div><dt>Formato</dt><dd id="producto-formato"></dd></div>
+        </dl>
+
+        <form id="form-cantidad" class="form-cantidad" method="post" novalidate>
+          <div class="campo">
+            <label for="cantidad">Cantidad</label>
+            <input type="number" id="cantidad" name="cantidad" value="1" min="1" step="1"
+                   inputmode="numeric" aria-describedby="error-cantidad">
+            <p id="error-cantidad" class="error" role="alert" hidden></p>
+          </div>
+
+          <button type="submit" id="boton-anadir" class="boton">Añadir al carrito</button>
+
+          <p id="mensaje-ok" class="ok" role="status" hidden>
+            <span id="texto-ok"></span>
+            <a href="cart.html">Ver carrito</a>
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== PRODUCTO INEXISTENTE ===== -->
+    <section id="no-encontrado" class="panel" aria-labelledby="titulo-no-encontrado" hidden>
+      <h1 id="titulo-no-encontrado">Producto no encontrado</h1>
+      <p>El producto que buscas no existe o ya no está disponible.</p>
+      <a class="boton" href="index.html#catalogo">Volver al catálogo</a>
+    </section>
+
+    <noscript>
+      <p>Necesitas activar JavaScript para ver la ficha de este prototipo.</p>
+    </noscript>
+
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <p>Oleum · Práctica de Arquitectura y Diseño de Sistemas Web y C/S · Curso 2026/2027</p>
+    <p><a href="gest_prod.html">Área de administración</a></p>
+  </footer>
+
+  <!-- Datos simulados primero, después la lógica -->
+  <script src="assets/js/datos-productos.js"></script>
+  <script src="assets/js/comun.js"></script>
+  <script src="assets/js/item.js"></script>
+</body>
+</html>
