@@ -203,3 +203,70 @@ const Sesion = {
     try { localStorage.removeItem(CLAVE_SESION); } catch (e) { /* sin almacenamiento */ }
   }
 };
+
+/* ==========================================================
+   Pedidos: estados, listado completo y perfil editable.
+   "oleum_estados": { "OL-1001": "enviado" } cambios de estado (admin).
+   "oleum_perfiles": { "correo": { nombre, direccion } } ediciones de perfil.
+   ========================================================== */
+const ESTADOS_PEDIDO = {
+  recibido: "Recibido",
+  preparacion: "En preparación",
+  enviado: "Enviado",
+  entregado: "Entregado",
+  cancelado: "Cancelado"
+};
+
+function leerJSON(clave, porDefecto) {
+  try {
+    const datos = JSON.parse(localStorage.getItem(clave));
+    return (datos && typeof datos === "object") ? datos : porDefecto;
+  } catch (e) {
+    return porDefecto;
+  }
+}
+
+/* Pedidos de ejemplo + confirmados en este navegador, con los estados cambiados por el admin */
+Pedidos.todos = function () {
+  const ejemplo = (typeof PEDIDOS_EJEMPLO !== "undefined") ? PEDIDOS_EJEMPLO : [];
+  const estados = leerJSON("oleum_estados", {});
+  return ejemplo.concat(this.obtener()).map(function (p) {
+    return Object.assign({}, p, { estado: estados[p.numero] || p.estado });
+  });
+};
+
+Pedidos.deUsuario = function (email) {
+  const buscado = String(email).toLowerCase();
+  return this.todos().filter(function (p) { return (p.email || "").toLowerCase() === buscado; })
+    .sort(function (a, b) { return a.fecha < b.fecha ? 1 : -1; });
+};
+
+Pedidos.cambiarEstado = function (numero, estado) {
+  if (!ESTADOS_PEDIDO[estado]) { return false; }
+  const estados = leerJSON("oleum_estados", {});
+  estados[numero] = estado;
+  try { localStorage.setItem("oleum_estados", JSON.stringify(estados)); } catch (e) { return false; }
+  return true;
+};
+
+/* Datos del usuario con las ediciones de perfil aplicadas */
+Usuarios.perfilDe = function (email) {
+  const base = this.buscarPorEmail(email);
+  if (!base) { return null; }
+  const ediciones = leerJSON("oleum_perfiles", {})[base.email.toLowerCase()] || {};
+  return Object.assign({}, base, ediciones);
+};
+
+Usuarios.guardarPerfil = function (email, datos) {
+  const perfiles = leerJSON("oleum_perfiles", {});
+  perfiles[String(email).toLowerCase()] = { nombre: datos.nombre, direccion: datos.direccion };
+  try { localStorage.setItem("oleum_perfiles", JSON.stringify(perfiles)); } catch (e) { return false; }
+  return true;
+};
+
+Sesion.actualizarNombre = function (nombre) {
+  const s = this.actual();
+  if (!s) { return; }
+  s.nombre = nombre;
+  try { localStorage.setItem(CLAVE_SESION, JSON.stringify(s)); } catch (e) { /* sin almacenamiento */ }
+};
