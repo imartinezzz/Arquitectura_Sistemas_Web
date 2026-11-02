@@ -1,1 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carrito · Oleum</title>
+  <meta name="description" content="Revisa los productos de tu carrito de Oleum, cambia las cantidades y consulta el total antes de finalizar tu pedido.">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
 
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="cabecera">
+    <a class="logo" href="index.html">Oleum</a>
+
+    <nav class="menu" aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#catalogo">Catálogo</a></li>
+        <li><a href="cart.html" aria-current="page">Carrito (<span id="contador-carrito">0</span>)</a></li>
+        <li><a href="perfil.html">Mi cuenta</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="register.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <h1 id="titulo-carrito" tabindex="-1">Tu carrito</h1>
+
+    <!-- Avisos: los rellena cart.js -->
+    <p id="estado-carrito" class="ok" role="status"></p>
+    <p id="error-carrito" class="error" role="alert" hidden></p>
+
+    <!-- ===== CARRITO VACÍO ===== -->
+    <section id="carrito-vacio" class="panel" aria-labelledby="titulo-vacio" hidden>
+      <h2 id="titulo-vacio">Tu carrito está vacío</h2>
+      <p>Añade algún aceite desde el catálogo para poder hacer un pedido.</p>
+      <a class="boton" href="index.html#catalogo">Ir al catálogo</a>
+    </section>
+
+    <!-- ===== CARRITO CON PRODUCTOS ===== -->
+    <section id="carrito-contenido" aria-label="Productos del carrito" hidden>
+      <div class="tabla-contenedor">
+        <table class="tabla-carrito">
+          <caption class="solo-lectores">Productos añadidos al carrito</caption>
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="lineas-carrito">
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row" colspan="2">Total</th>
+              <td id="total-carrito"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="acciones-carrito">
+        <a class="boton boton-secundario" href="index.html#catalogo">Seguir comprando</a>
+        <button type="button" id="boton-vaciar" class="boton boton-peligro">Vaciar carrito</button>
+        <a class="boton" id="enlace-finalizar" href="conf_pedido.html">Finalizar pedido</a>
+      </div>
+    </section>
+
+    <noscript>
+      <p>Necesitas activar JavaScript para ver el carrito de este prototipo.</p>
+    </noscript>
+  </main>
+
+  <!-- ===== PIE ===== -->
+  <footer class="pie">
+    <p>Oleum · Práctica de Arquitectura y Diseño de Sistemas Web y C/S · Curso 2026/2027</p>
+    <p><a href="gest_prod.html">Área de administración</a></p>
+  </footer>
+
+  <script src="assets/js/datos-productos.js"></script>
+  <script src="assets/js/comun.js"></script>
+  <script src="assets/js/cart.js"></script>
+</body>
+</html>
