@@ -7,8 +7,7 @@ const CLAVE_CARRITO = "oleum_cart";
 
 /* Busca un producto por id (null si no existe). */
 function buscarProducto(id) {
-  if (typeof PRODUCTOS === "undefined") { return null; }
-  return PRODUCTOS.find(function (p) { return p.id === Number(id); }) || null;
+  return Catalogo.visibles().find(function (p) { return p.id === Number(id); }) || null;
 }
 
 /* 12,5 -> "12,50 €" */
@@ -269,4 +268,59 @@ Sesion.actualizarNombre = function (nombre) {
   if (!s) { return; }
   s.nombre = nombre;
   try { localStorage.setItem(CLAVE_SESION, JSON.stringify(s)); } catch (e) { /* sin almacenamiento */ }
+};
+
+/* ==========================================================
+   Catálogo editable por el administrador.
+   "oleum_productos": { "id": { ...producto completo... } }
+   Se combina con PRODUCTOS (datos-productos.js). Un producto con
+   activo:false está "dado de baja" (baja lógica): no se vende,
+   pero sigue existiendo y los pedidos antiguos no se rompen.
+   ========================================================== */
+const CLAVE_PRODUCTOS = "oleum_productos";
+
+const Catalogo = {
+  cambios: function () {
+    return leerJSON(CLAVE_PRODUCTOS, {});
+  },
+
+  /* Todos los productos, también los dados de baja (para administración) */
+  todos: function () {
+    const base = (typeof PRODUCTOS !== "undefined") ? PRODUCTOS : [];
+    const cambios = this.cambios();
+    const lista = base.map(function (p) {
+      return Object.assign({ activo: true }, p, cambios[p.id] || {});
+    });
+    Object.keys(cambios).forEach(function (clave) {
+      if (!base.some(function (p) { return String(p.id) === clave; })) {
+        lista.push(Object.assign({ activo: true }, cambios[clave]));
+      }
+    });
+    return lista;
+  },
+
+  /* Solo los que se pueden ver y comprar */
+  visibles: function () {
+    return this.todos().filter(function (p) { return p.activo !== false; });
+  },
+
+  siguienteId: function () {
+    return this.todos().reduce(function (max, p) { return Math.max(max, p.id); }, 0) + 1;
+  },
+
+  guardar: function (producto) {
+    const cambios = this.cambios();
+    cambios[producto.id] = producto;
+    try {
+      localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(cambios));
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+};
+
+Sesion.esAdmin = function () {
+  const s = this.actual();
+  return !!s && s.rol === "admin";
 };
