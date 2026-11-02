@@ -103,6 +103,7 @@
     const pedido = {
       numero: Pedidos.siguienteNumero(),
       fecha: new Date().toISOString(),
+      email: (Sesion.actual() || {}).email || "",
       estado: "recibido",
       envio: {
         nombre: nombre.value.trim(),
