@@ -15,7 +15,8 @@
   const lista = document.getElementById("lista-productos");
   const paginacion = document.getElementById("paginacion");
 
-  let filtrados = PRODUCTOS.slice();
+  const activos = Catalogo.visibles();
+  let filtrados = activos.slice();
   let paginaActual = 1;
 
   /* "Árbol" y "arbol" cuentan como lo mismo; mayúsculas da igual */
@@ -58,7 +59,7 @@
     const texto = normalizar(campoBusqueda.value.trim());
     const categoria = campoCategoria.value;
 
-    filtrados = PRODUCTOS.filter(function (p) {
+    filtrados = activos.filter(function (p) {
       const coincideTexto = texto === "" ||
         normalizar(p.nombre + " " + p.productor + " " + p.variedad + " " + p.origen).indexOf(texto) !== -1;
       const coincideCategoria = categoria === "" || p.categoria === categoria;
@@ -186,7 +187,7 @@
   formulario.addEventListener("reset", function () {
     setTimeout(function () {
       limpiarError();
-      filtrados = PRODUCTOS.slice();
+      filtrados = activos.slice();
       paginaActual = 1;
       pintar();
     }, 0);
