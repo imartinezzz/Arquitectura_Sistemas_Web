@@ -466,3 +466,52 @@ th {
 @media (min-width: 48em) {
   .detalle-producto { grid-template-columns: 1fr 1fr; align-items: start; }
 }
+
+/* - 9. CARRITO (cart.html) - */
+/* Texto solo para lectores de pantalla (etiquetas visualmente ocultas) */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.tabla-carrito td { vertical-align: top; }
+.tabla-carrito input[type="number"] { width: 5rem; }
+
+.tabla-carrito .producto-detalle {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--color-texto-suave);
+}
+
+.acciones-linea {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-2);
+}
+.acciones-linea .boton {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.tabla-carrito tfoot th,
+.tabla-carrito tfoot td {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.acciones-carrito {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-4);
+}
+
+#titulo-carrito:focus { outline: none; }
